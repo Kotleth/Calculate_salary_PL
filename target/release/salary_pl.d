@@ -1,0 +1,1 @@
+/Users/przemyslaw/Desktop/Rust_files/projects/salary_calc/salary_pl/Calculate_salary_PL/target/release/salary_pl: /Users/przemyslaw/Desktop/Rust_files/projects/salary_calc/salary_pl/Calculate_salary_PL/src/main.rs

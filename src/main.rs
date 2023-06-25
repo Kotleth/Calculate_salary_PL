@@ -44,15 +44,13 @@ fn read_salary() {
 fn calc_netto_specific(brutto_monthly: f32, ppk_value: f32) -> [f32; 12] {
     let mut monthly_statement: [f32; 12] = [0.0; 12];
     let mut full_brutto: f32 = 0.0;
-    let mut netto = 0.0;
-    let mut enumerator = 0;
+    let mut netto: f32;
 
-    for income in 0..12 {
+    for month_number in 0..12 {
         let pension_contr = brutto_monthly * 0.0976;
         let rental_contr = brutto_monthly * 0.015;
         let medical_contr = brutto_monthly * 0.0245;
         let ppk_company = brutto_monthly * 0.015;
-        let tax_reduction = 300.0;
         let brutto = (brutto_monthly - pension_contr - rental_contr - medical_contr) * 0.91 - brutto_monthly * ppk_value/100.0 + ppk_company;
         if brutto <= TAX_FREE_ALLOWANCE - full_brutto {
             netto = brutto;
@@ -74,12 +72,10 @@ fn calc_netto_specific(brutto_monthly: f32, ppk_value: f32) -> [f32; 12] {
             }
         }
         full_brutto += brutto_monthly;
-        monthly_statement[enumerator] = netto;
-        enumerator += 1;
+        monthly_statement[month_number] = netto;
     }
     let mut annually_netto: f32 = 0.0;
     for income in monthly_statement {
-        // println!("{}. month = {}", enumerator, income);
         annually_netto += income;
     };
     println!("\n#####\nAnnually brutto = {:.2}", full_brutto);
