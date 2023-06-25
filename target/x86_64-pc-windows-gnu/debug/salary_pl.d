@@ -1,0 +1,1 @@
+/Users/przemyslaw/Desktop/Rust_files/projects/salary_calc/salary_pl/Calculate_salary_PL/target/x86_64-pc-windows-gnu/debug/salary_pl.exe: /Users/przemyslaw/Desktop/Rust_files/projects/salary_calc/salary_pl/Calculate_salary_PL/src/main.rs
