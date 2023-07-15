@@ -14,7 +14,7 @@ fn read_salary() {
         Ok(value) => value,
         Err(_) => - 1.0,
     };
-    println!("Enter ppk contribution [%]: ");
+    println!("Enter ppk contribution [%] (typically it's 2):");
     io::stdin().read_line(&mut ppk_str).expect("Not a valid string\n");
     let ppk_value: f32 = match ppk_str.trim().parse() {
         Ok(value) => value,
@@ -57,20 +57,37 @@ fn calc_netto_specific(brutto_monthly: f32, ppk_value: f32) -> [f32; 12] {
         } else if full_brutto >= TAX_FREE_ALLOWANCE {
             if brutto <= FIRST_THRESHOLD - full_brutto {
                 netto = brutto * 0.88;
+                if brutto * 0.12 < 300.0 { // ** not sure
+                    netto += brutto * 0.12;
+                } else {
+                    netto += 300.0;
+                } // not sure **
             } else { // brutto + full_brutto > FIRST_THRESHOLD
                 if full_brutto >= FIRST_THRESHOLD {
                     netto = brutto * 0.68;
                 } else { // full_brutto < FIRST THRESHOLD
                     netto = (FIRST_THRESHOLD - full_brutto) * 0.88 + (brutto - (FIRST_THRESHOLD - full_brutto)) * 0.68;
                 }
+                netto += 300.0; // not sure
             }
         } else { // full_brutto < TAX_FREE_ALLOWANCE 
             if brutto + full_brutto > FIRST_THRESHOLD {
                 netto = TAX_FREE_ALLOWANCE - full_brutto + (FIRST_THRESHOLD - TAX_FREE_ALLOWANCE) * 0.88 + (brutto - FIRST_THRESHOLD - TAX_FREE_ALLOWANCE) * 0.68;
+                netto += 300.0; // not sure
             } else { // brutto + full_brutto <= FIRST_THRESHOLD
                 netto = TAX_FREE_ALLOWANCE - full_brutto + (brutto - (TAX_FREE_ALLOWANCE - full_brutto)) * 0.88;
+                if (brutto - (TAX_FREE_ALLOWANCE - full_brutto)) * 0.12 < 300.0 { // ** not sure
+                    netto += (brutto - (TAX_FREE_ALLOWANCE - full_brutto)) * 0.12;
+                } else {
+                    netto += 300.0;
+                } // not sure **
             }
         }
+        // if brutto_monthly - netto < 300.0 {
+        //     netto = brutto_monthly;
+        // } else {
+        //     netto += 300.0;
+        // }
         full_brutto += brutto_monthly;
         monthly_statement[month_number] = netto;
     }
@@ -85,6 +102,9 @@ fn calc_netto_specific(brutto_monthly: f32, ppk_value: f32) -> [f32; 12] {
     monthly_statement
 }
 
-fn main() {    
+fn main() {
     read_salary();
+    let mut buffer = String::new();
+    println!("Press enter to exit");
+    io::stdin().read_line(&mut buffer).expect("Not a valid string\n");
 }
