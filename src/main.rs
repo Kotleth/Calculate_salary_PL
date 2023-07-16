@@ -25,19 +25,12 @@ fn read_salary() {
         read_salary();
     } else {
         let monthly_statement = calc_netto_specific(brutto, ppk_value);
-        println!("\nJan = {:.2}", monthly_statement[0]);
-        println!("Feb = {:.2}", monthly_statement[1]);
-        println!("Mar = {:.2}", monthly_statement[2]);
-        println!("Apr = {:.2}", monthly_statement[3]);
-        println!("May = {:.2}", monthly_statement[4]);
-        println!("Jun = {:.2}", monthly_statement[5]);
-        println!("Jul = {:.2}", monthly_statement[6]);
-        println!("Aug = {:.2}", monthly_statement[7]);
-        println!("Sep = {:.2}", monthly_statement[8]);
-        println!("Oct = {:.2}", monthly_statement[9]);
-        println!("Nov = {:.2}", monthly_statement[10]);
-        println!("Dec = {:.2}\n", monthly_statement[11]);
-        println!("#####");
+        let months_names = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+        println!("\n");
+        for i in 0..months_names.len() {
+            println!("{} = {:.2}", months_names[i], monthly_statement[i]);
+        }
+        println!("\n#####");
     }
 }
 
@@ -83,11 +76,6 @@ fn calc_netto_specific(brutto_monthly: f32, ppk_value: f32) -> [f32; 12] {
                 } // not sure **
             }
         }
-        // if brutto_monthly - netto < 300.0 {
-        //     netto = brutto_monthly;
-        // } else {
-        //     netto += 300.0;
-        // }
         full_brutto += brutto_monthly;
         monthly_statement[month_number] = netto;
     }
